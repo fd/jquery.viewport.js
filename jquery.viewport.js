@@ -1,59 +1,61 @@
-$.fn.viewportState = (function(){
-  var results = [];
-  this.each(function(){
-    var bounds = this.getBoundingClientRect();
-    if (window.viewport.height() < bounds.top) {
-      results.push(['below', $(this)]);
-    } else if (bounds.bottom <= 0) {
-      results.push(['above', $(this)]);
-    } else {
-      results.push(['screen', $(this)]);
-    };
+(function($){
+  $.fn.viewportState = (function(){
+    var results = [];
+    this.each(function(){
+      var bounds = this.getBoundingClientRect();
+      if (window.viewport.height() < bounds.top) {
+        results.push(['below', $(this)]);
+      } else if (bounds.bottom <= 0) {
+        results.push(['above', $(this)]);
+      } else {
+        results.push(['screen', $(this)]);
+      };
+    });
+    return results;
   });
-  return results;
-});
-
-$.fn.inViewport = (function(){
-  var results = [];
-  this.each(function(){
-    var bounds = this.getBoundingClientRect();
-    if (window.viewport.height() < bounds.top) {
-      // ignore
-    } else if (bounds.bottom <= 0) {
-      // ignore
-    } else {
-      results.push(this);
-    };
+  
+  $.fn.inViewport = (function(){
+    var results = [];
+    this.each(function(){
+      var bounds = this.getBoundingClientRect();
+      if (window.viewport.height() < bounds.top) {
+        // ignore
+      } else if (bounds.bottom <= 0) {
+        // ignore
+      } else {
+        results.push(this);
+      };
+    });
+    return $(results);
   });
-  return $(results);
-});
-
-$.fn.aboveViewport = (function(){
-  var results = [];
-  this.each(function(){
-    var bounds = this.getBoundingClientRect();
-    if (window.viewport.height() < bounds.top) {
-      // ignore
-    } else if (bounds.bottom <= 0) {
-      results.push(this);
-    } else {
-      // ignore
-    };
+  
+  $.fn.aboveViewport = (function(){
+    var results = [];
+    this.each(function(){
+      var bounds = this.getBoundingClientRect();
+      if (window.viewport.height() < bounds.top) {
+        // ignore
+      } else if (bounds.bottom <= 0) {
+        results.push(this);
+      } else {
+        // ignore
+      };
+    });
+    return $(results);
   });
-  return $(results);
-});
-
-$.fn.belowViewport = (function(){
-  var results = [];
-  this.each(function(){
-    var bounds = this.getBoundingClientRect();
-    if (window.viewport.height() < bounds.top) {
-      results.push(this);
-    } else if (bounds.bottom <= 0) {
-      // ignore
-    } else {
-      // ignore
-    };
+  
+  $.fn.belowViewport = (function(){
+    var results = [];
+    this.each(function(){
+      var bounds = this.getBoundingClientRect();
+      if (window.viewport.height() < bounds.top) {
+        results.push(this);
+      } else if (bounds.bottom <= 0) {
+        // ignore
+      } else {
+        // ignore
+      };
+    });
+    return $(results);
   });
-  return $(results);
-});
+})(jQuery);
