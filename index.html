@@ -1,0 +1,200 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset=utf-8>
+  <title>This is an example page for a jQuery plugin for getting elements above, in or below the viewport</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body { font-family: Georgia, "Times New Roman", sans-serif; font-size: 0.69em; line-height: 1.5em; font-style: italic; color: #006A7F; background: #9FE6FF; }
+    a { color: #CF4900; }
+    a:hover { text-decoration: none; }
+    section,
+    footer { display: block; clear: both; padding: 20px; }
+    header { position: absolute; top: 20px; margin: 20px; padding: 20px; background: #EEE; }
+    .logger { position: absolute; top: 150px; margin: 20px; padding: 10px; color: #B5D4DF; background: #17222F; }
+    .logger strong { color: #FFF; }
+    article { float: left; margin: 0 20px 20px 0; width: 200px; height: 200px; background: #23A5BF; }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+  
+    (function($){
+      $.fn.viewportState = (function(){
+        var results = [];
+        this.each(function(){
+          var bounds = this.getBoundingClientRect();
+          if ($(window).height() < bounds.top) {
+            results.push(['below', $(this)]);
+          } else if (bounds.bottom <= 0) {
+            results.push(['above', $(this)]);
+          } else {
+            results.push(['screen', $(this)]);
+          };
+        });
+        return results;
+      });
+
+      $.fn.inViewport = (function(){
+        var results = [];
+        this.each(function(){
+          var bounds = this.getBoundingClientRect();
+          if ($(window).height() < bounds.top) {
+            // ignore
+          } else if (bounds.bottom <= 0) {
+            // ignore
+          } else {
+            results.push(this);
+          };
+        });
+        return $(results);
+      });
+
+      $.fn.aboveViewport = (function(){
+        var results = [];
+        this.each(function(){
+          var bounds = this.getBoundingClientRect();
+          if ($(window).height() < bounds.top) {
+            // ignore
+          } else if (bounds.bottom <= 0) {
+            results.push(this);
+          } else {
+            // ignore
+          };
+        });
+        return $(results);
+      });
+
+      $.fn.belowViewport = (function(){
+        var results = [];
+        this.each(function(){
+          var bounds = this.getBoundingClientRect();
+          if ($(window).height() < bounds.top) {
+            results.push(this);
+          } else if (bounds.bottom <= 0) {
+            // ignore
+          } else {
+            // ignore
+          };
+        });
+        return $(results);
+      });
+    })(jQuery);
+  
+    (function(){
+      
+      $.fn.followScroll = function(options){
+        var opts = options ? $.extend({}, $.fn.followScroll.defaults, options) : $.fn.followScroll.defaults;
+        this.each(function(){
+          var $this = $(this);
+          $(window).scroll(function(){
+            var bounds = $('body')[0].getBoundingClientRect();
+            if (bounds.top < 0) {
+              $this.stop()
+                   .animate({
+                     top: (bounds.top * -1) + opts.top
+                   });
+            } else {
+              $this.stop()
+                   .animate({
+                      top: opts.top
+                    });
+            }
+          });
+
+        });
+      }
+      
+      $.fn.followScroll.defaults = {
+        top: 0
+      }
+      
+    })(jQuery);
+    
+  
+    // DOM Ready
+    $(function(){
+      
+      $(document).click(function(){
+        $('.logger .number-above-viewport').html($('article').aboveViewport().length);
+        $('.logger .number-in-viewport').html($('article').inViewport().length);
+        $('.logger .number-below-viewport').html($('article').belowViewport().length);
+      });
+      
+      $('body').click();
+      
+      $('header').followScroll({
+        top: 20
+      });
+      
+      $('.logger').followScroll({
+        top: 150
+      })
+    
+    });
+    
+  </script>
+</head>
+<body>
+  <header>
+    <h1>This is an example page for a jQuery plugin for getting elements above, in or below the viewport.</h1>
+    <p>Click anywhere in the page and read the results below</p>
+  </header>
+  <div class="logger">
+    There are <strong class="number-above-viewport">x</strong> elements visible <strong>above</strong> the viewport.<br>
+    There are <strong class="number-in-viewport">x</strong> elements visible <strong>in</strong> the viewport.<br>
+    There are <strong class="number-below-viewport">x</strong> elements visible <strong>below</strong> the viewport.
+  </div>
+  <section>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+    <article></article>
+  </section>
+  <footer>
+    This page is brought to you by <a href="http://yvesvanbroekhoven.be">Yves Van Broekhoven</a>. <a href="http://gist.github.com/604705" rel="external">Viewport script</a> credits go to <a href="http://simonmenke.me/" rel="external">Simon Menke</a>. 
+  </footer>
+</body>
+</html>
