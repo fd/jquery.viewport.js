@@ -3,7 +3,7 @@
     var results = [];
     this.each(function(){
       var bounds = this.getBoundingClientRect();
-      if (window.viewport.height() < bounds.top) {
+      if ($(window).height() < bounds.top) {
         results.push(['below', $(this)]);
       } else if (bounds.bottom <= 0) {
         results.push(['above', $(this)]);
@@ -13,12 +13,12 @@
     });
     return results;
   });
-  
+
   $.fn.inViewport = (function(){
     var results = [];
     this.each(function(){
       var bounds = this.getBoundingClientRect();
-      if (window.viewport.height() < bounds.top) {
+      if ($(window).height() < bounds.top) {
         // ignore
       } else if (bounds.bottom <= 0) {
         // ignore
@@ -28,12 +28,12 @@
     });
     return $(results);
   });
-  
+
   $.fn.aboveViewport = (function(){
     var results = [];
     this.each(function(){
       var bounds = this.getBoundingClientRect();
-      if (window.viewport.height() < bounds.top) {
+      if ($(window).height() < bounds.top) {
         // ignore
       } else if (bounds.bottom <= 0) {
         results.push(this);
@@ -43,12 +43,12 @@
     });
     return $(results);
   });
-  
+
   $.fn.belowViewport = (function(){
     var results = [];
     this.each(function(){
       var bounds = this.getBoundingClientRect();
-      if (window.viewport.height() < bounds.top) {
+      if ($(window).height() < bounds.top) {
         results.push(this);
       } else if (bounds.bottom <= 0) {
         // ignore
